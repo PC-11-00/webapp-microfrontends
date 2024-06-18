@@ -49,6 +49,7 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule } from '@angular-mat
 import { LocationStrategy } from '@angular/common';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FormDialogComponent } from './form-dialog/form-dialog.component';
 
 
 
@@ -83,14 +84,14 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     TransactionPaymentDetailComponent,
     NotificationsTrayComponent,
     // FormfieldComponent,
-    // FormDialogComponent
+    FormDialogComponent
   ],
   imports: [
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: (http: HttpClient, locationStrategy: LocationStrategy) => {
-          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }${locationStrategy.getBaseHref()}/assets/translations/`, '.json');
+          return new TranslateHttpLoader(http, `${window.location.protocol}//${window.location.host}${locationStrategy.getBaseHref()}/assets/translations/`, '.json');
         },
         deps: [HttpClient, LocationStrategy]
       }
@@ -104,7 +105,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     FormsModule,
     HttpClientModule,
     NgxMatDatetimePickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    FormDialogComponent
   ],
   exports: [
     MifosxLibComponent,
@@ -116,6 +118,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     IconsModule,
     CommonModule,
     RouterModule,
+    FormDialogComponent,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
