@@ -13,7 +13,7 @@ export * from './lib/icons.module';
 export * from './lib/pipes/pipes.module';
 export * from './lib/material.module';
 export * from './lib/pipes/translation-loader'
-export * from './lib/pipes/trasnlation.module'
+export * from './lib/pipes/translation.module'
 export * from './lib/configuration-wizard/configuration-wizard.module'
 
 
