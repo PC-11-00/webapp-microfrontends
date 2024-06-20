@@ -32,7 +32,6 @@ import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { TenantSelectorComponent } from './tenant-selector/tenant-selector.component';
 import { ThemePickerComponent } from './theme-picker/theme-picker.component';
 import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
-import { ShellComponent } from '@mifosx-app/core/shell/shell.component';
 import { TransactionPaymentDetailComponent } from './transaction-payment-detail/transaction-payment-detail.component';
 import { NotificationsTrayComponent } from './notifications-tray/notifications-tray.component';
 // import { FormfieldComponent } from './form-dialog/formfield/formfield.component';

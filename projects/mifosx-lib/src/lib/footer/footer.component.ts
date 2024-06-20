@@ -5,9 +5,9 @@ import { AlertService } from '@mifosx-lib/core/alert/alert.service';
 import { AuthenticationService } from '@mifosx-lib/core/authentication/authentication.service';
 import { Dates } from '@mifosx-lib/core/utils/dates';
 import { SettingsService } from '@mifosx-lib/settings/settings.service';
-import { SystemService } from '@mifosx-app/system/system.service';
-import { VersionService } from '@mifosx-app/system/version.service';
-
+import { MifosxLibService } from '../../public-api';
+import { GlobalConfigurationService } from '@fineract-lib';
+import { BusinessDateManagementService } from '@fineract-lib';
 /** Environment Configuration */
 import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
@@ -44,12 +44,14 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   displayBackEndInfo = true;
 
-  constructor(private systemService: SystemService,
+  constructor(
+    private globalConfigurationService: GlobalConfigurationService,
+    private businessDateManagementService: BusinessDateManagementService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private alertService: AlertService,
     private dateUtils: Dates,
-    private versionService: VersionService) {
+    private mifosxLibService: MifosxLibService) {
     this.displayBackEndInfo = (environment.displayBackEndInfo === 'true');
   }
 
@@ -73,7 +75,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       });
       this.getConfigurations();
       this.server = this.settingsService.server;
-      this.versionService.getBackendInfo().subscribe((data: any) => {
+      this.mifosxLibService.getBackendInfo().subscribe((data: any) => {
         const buildVersion: string = data.git.build.version.split('-');
         this.versions.fineract.version = buildVersion[0];
         this.versions.fineract.hash = buildVersion[1];
@@ -92,7 +94,7 @@ export class FooterComponent implements OnInit, OnDestroy {
    */
   getConfigurations(): void {
     if (this.authenticationService.isAuthenticated()) {
-      this.systemService.getConfigurationByName(SettingsService.businessDateConfigName)
+      this.globalConfigurationService.retrieveOneByName(SettingsService.businessDateConfigName)
         .subscribe((configurationData: any) => {
           this.isBusinessDateEnabled = configurationData.enabled;
           this.settingsService.setBusinessDateConfig(configurationData.enabled);
@@ -110,7 +112,7 @@ export class FooterComponent implements OnInit, OnDestroy {
    * Get the Business Date data
    */
   setBusinessDate(): void {
-    this.systemService.getBusinessDate(SettingsService.businessDateType)
+    this.businessDateManagementService.getBusinessDate(SettingsService.businessDateType)
       .subscribe((data: any) => {
         this.businessDate = new Date(data.date);
         this.settingsService.setBusinessDate(this.dateUtils.formatDate(this.businessDate, SettingsService.businessDateFormat));
